@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshay - Linux System Administrator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @media (max-width: 600px) {
+            /* This makes your main container take up the full width of the phone */
+            .about-image,
+            .container,
+            body {
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+            }
+            /* This ensures your photo doesn't overflow the screen */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            /* Makes your text slightly smaller so it fits nicely */
+            h1 {
+                font-size: 24px;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+         :root {
+            --bg-primary: #09090b;
+            --neon-purple: #a855f7;
+            --neon-cyan: #06b6d4;
+            --neon-pink: #ec4899;
+            --glass-bg: rgba(24, 24, 27, 0.4);
+            --glass-border: rgba(168, 85, 247, 0.2);
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Animated background grid */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes gridPulse {
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        /* Floating orbs */
+        
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--neon-purple);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--neon-cyan);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: 5s;
+        }
+        
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--neon-pink);
+            top: 50%;
+            right: 10%;
+            animation-delay: 10s;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+        /* Container */
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        /* Hero Section */
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan), var(--neon-pink));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: gradientShift 8s ease infinite;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+        
+        @keyframes gradientShift {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            letter-spacing: 0.05em;
+        }
+        /* Marquee */
+        
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem 0;
+            margin-top: 4rem;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
+        }
+        
+        .marquee {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+        
+        .marquee-item {
+            padding: 0 3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--text-primary);
+            position: relative;
+        }
+        
+        .marquee-item::after {
+            content: '•';
+            position: absolute;
+            right: 1.5rem;
+            color: var(--neon-purple);
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        /* Section Titles */
+        
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--text-primary), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Bento Grid */
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .bento-item:nth-child(1) {
+                grid-column: span 2;
+            }
+            .bento-item:nth-child(4) {
+                grid-column: span 2;
+            }
+        }
+        
+        .bento-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .bento-item:hover::before {
+            opacity: 0.1;
+        }
+        
+        .bento-item h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--neon-purple);
+        }
+        
+        .bento-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .bento-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tag {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--neon-purple);
+        }
+        /* About Section */
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        @media (min-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1.5fr 1fr;
+            }
+        }
+        
+        .about-text {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 3rem;
+        }
+        
+        .about-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .about-text h4 {
+            color: var(--neon-purple);
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .about-text ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .about-text li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .about-text li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--neon-purple);
+            font-weight: bold;
+        }
+        
+        .about-image {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.2));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.5;
+            }
+        }
+        /* Footer */
+        
+        .footer {
+            padding: 4rem 0;
+            border-top: 1px solid rgba(168, 85, 247, 0.1);
+            margin-top: 6rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .social-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .social-link:hover {
+            color: var(--neon-purple);
+        }
+        
+        .social-link:hover::after {
+            width: 100%;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        /* Scroll indicator */
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: var(--neon-purple);
+        }
+        
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            .hero {
+                min-height: 80vh;
+            }
+            .section {
+                padding: 4rem 0;
+            }
+            .marquee-item {
+                font-size: 1rem;
+                padding: 0 2rem;
+            }
+            .about-text {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-subtitle">LINUX SYSTEM ADMINISTRATOR</div>
+            <h1 class="hero-title">AKSHAY SARODE</h1>
+            <div class="marquee-container">
+                <div class="marquee">
+                    <div class="marquee-item">Red Hat Linux</div>
+                    <div class="marquee-item">AWS Cloud</div>
+                    <div class="marquee-item">MFT Operations</div>
+                    <div class="marquee-item">SFTP/FTPS</div>
+                    <div class="marquee-item">IBM Sterling</div>
+                    <div class="marquee-item">Axway MFT</div>
+                    <div class="marquee-item">System Administration</div>
+                    <div class="marquee-item">99.9% Uptime</div>
+                    <div class="marquee-item">Red Hat Linux</div>
+                    <div class="marquee-item">AWS Cloud</div>
+                    <div class="marquee-item">MFT Operations</div>
+                    <div class="marquee-item">SFTP/FTPS</div>
+                    <div class="marquee-item">IBM Sterling</div>
+                    <div class="marquee-item">Axway MFT</div>
+                    <div class="marquee-item">System Administration</div>
+                    <div class="marquee-item">99.9% Uptime</div>
+                </div>
+            </div>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">FEATURED WORK</h2>
+            <div class="bento-grid">
+                <div class="bento-item">
+                    <h3>MFT Operations Excellence</h3>
+                    <p>Orchestrated secure file workflows via SFTP/FTPS/HTTPS protocols for mission-critical enterprise applications, achieving 100% SLA compliance and reducing transfer delays significantly.</p>
+                    <div class="bento-tags">
+                        <span class="tag">IBM Sterling</span>
+                        <span class="tag">Axway MFT</span>
+                        <span class="tag">SFTP/FTPS</span>
+                        <span class="tag">ITSM</span>
+                    </div>
+                </div>
+
+                <div class="bento-item">
+                    <h3>Linux Infrastructure</h3>
+                    <p>Administered 100+ remote RHEL servers in 24x7 production environments with 99.9% uptime guarantee.</p>
+                    <div class="bento-tags">
+                        <span class="tag">Red Hat Linux</span>
+                        <span class="tag">Unix</span>
+                        <span class="tag">Troubleshooting</span>
+                        <span class="tag">Monitoring</span>
+                        <span class="tag">Patching</span>
+                        <span class="tag">CLI</span>
+                        <span class="tag">Crontab</span>
+                    </div>
+                </div>
+
+                <div class="bento-item">
+                    <h3>Cloud Infrastructure</h3>
+                    <p>Managed scalable AWS environments with EC2, S3, and CloudWatch for enterprise-grade hosting solutions.</p>
+                    <div class="bento-tags">
+                        <span class="tag">AWS EC2</span>
+                        <span class="tag">S3</span>
+                        <span class="tag">Systems Manager</span>
+                    </div>
+                </div>
+
+                <div class="bento-item">
+                    <h3>Incident Management & Support</h3>
+                    <p>Resolved complex production incidents through ITIL-based ITSM workflows, coordinating with L2/L3 teams and maintaining comprehensive log analysis for root cause identification and prevention.</p>
+                    <div class="bento-tags">
+                        <span class="tag">ITIL</span>
+                        <span class="tag">Splunk</span>
+                        <span class="tag">Log Analysis</span>
+                        <span class="tag">Troubleshooting</span>
+                    </div>
+                </div>
+
+                <div class="bento-item">
+                    <h3>Security & Automation</h3>
+                    <p>Implemented PGP/GPG encryption, automated patching systems, and batch job scheduling for optimal performance.</p>
+                    <div class="bento-tags">
+                        <span class="tag">PGP/GPG</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">ABOUT</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Results-driven IT professional with 4+ years of experience in Managed File Transfer (MFT), Linux administration, and AWS cloud services in 24/7 production environments.</p>
+
+                    <p>Specialized in file transfer monitoring, SFTP/FTPS support, batch job scheduling, log analysis, and ITIL-based incident management. Proven track record of maintaining 99.9% system uptime while managing 100+ remote servers.</p>
+
+                    <h4>Core Expertise</h4>
+                    <ul>
+                        <li>Red Hat Linux & Ubuntu System Administration</li>
+                        <li>AWS Cloud Services (EC2, S3, RDS, CloudWatch)</li>
+                        <li>IBM Sterling File Gateway & Axway MFT</li>
+                        <li>SFTP/FTPS/HTTPS Protocol Management</li>
+                        <li>ITIL Foundation & SLA Management</li>
+                        <li>Splunk Monitoring & Log Analysis</li>
+                    </ul>
+
+                    <h4>Education</h4>
+                    <ul>
+                        <li>Master of Computer Applications (MCA), Pune University</li>
+                        <li>Bachelor of Science in Computer Science, Pune University</li>
+                    </ul>
+                </div>
+
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <img src="./Formal photo_.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://linkedin.com" class="social-link" target="_blank">LinkedIn</a>
+                <a href="https://github.com" class="social-link" target="_blank">GitHub</a>
+                <a href="mailto:akshaysarode106@gmail.com" class="social-link">Email</a>
+                <a href="#" class="social-link">Resume</a>
+            </div>
+            <p class="copyright">© 2026 Akshay. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
